@@ -27,13 +27,13 @@ export const SendMoney = () => {
                     <div className="space-y-2">
                     <label
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        for="amount"
+                        htmlFor="amount"
                     >
                         Amount (in Rs)
                     </label>
                     <input
                         onChange={(e) => {
-                            setAmount(e.target.value);
+                            setAmount(Number(e.target.value));
                         }}
                         type="number"
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
@@ -44,13 +44,14 @@ export const SendMoney = () => {
                     <button onClick={async () => {
                         await axios.post("http://localhost:4000/api/v1/account/transfer", {
                             to: id,
-                            amount
+                            amount:parseInt(amount)
                         }, {
                             headers: {
                                 Authorization: "Bearer " + localStorage.getItem("token"),
-                                'Content-Type': 'application/json'
                             }
                         })
+                        console.log("ID:", id, typeof id);
+                        console.log("Amount:", amount, typeof amount);
                     }} className="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white">
                         Initiate Transfer
                     </button>
